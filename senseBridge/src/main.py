@@ -179,5 +179,37 @@ def main():
     app.start()
 
 
+# Add to the main() function in src/main.py
+def main():
+    """Main entry point for SenseBridge application."""
+    # Check for headless mode
+    headless = "--headless" in sys.argv
+
+    # Check for simulation mode
+    simulation = "--simulation" in sys.argv
+
+    # Check for timeout
+    timeout = None
+    for arg in sys.argv:
+        if arg.startswith("--timeout="):
+            try:
+                timeout = float(arg.split("=")[1])
+            except:
+                pass
+
+    # Create and start SenseBridge
+    app = SenseBridge(headless=headless)
+
+    try:
+        app.start()
+
+        # If timeout specified, run only for that duration
+        if timeout:
+            time.sleep(timeout)
+            app.stop()
+    except KeyboardInterrupt:
+        print("\nReceived keyboard interrupt")
+        app.stop()
+
 if __name__ == "__main__":
     main()

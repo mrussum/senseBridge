@@ -1,11 +1,4 @@
 # file: test_notification.py
-
-
-import os
-import sys
-
-from test_helper import *
-
 def test_notification_manager():
     try:
         from src.notification.notification_manager import NotificationManager
